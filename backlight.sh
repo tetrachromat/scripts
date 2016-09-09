@@ -2,7 +2,14 @@
 
 BAD_ARGS=133
 
-NUM=$1
+if [ "$1" = "-c" ]; then
+  NUM=$2
+  CLEAR=true
+else 
+  NUM=$1
+  CLEAR=false
+fi
+
 
 if [[ ($NUM -gt 20) || ($NUM -lt 1)]]; then
   echo "You done fucked up bitch, enter a good number this time" 
@@ -21,4 +28,10 @@ if [[ ($NUM == 20) ]]; then
 fi
 
 echo $NEW_BRIGHT | sudo tee /sys/class/backlight/intel_backlight/brightness 
-exec clear
+
+#exec clear
+
+if [ "$CLEAR" = true ]; then
+  exec clear
+fi
+
