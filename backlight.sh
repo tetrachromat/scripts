@@ -20,6 +20,5 @@ if [[ ($NUM == 20) ]]; then
   ((NEW_BRIGHT = INC * NUM))
 fi
 
-echo $NEW_BRIGHT | sudo tee /sys/class/backlight/intel_backlight/brightness
-
-
+echo $NEW_BRIGHT | sudo tee /sys/class/backlight/intel_backlight/brightness 
+exec clear
