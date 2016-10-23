@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-export BACKGROUND=/home/phat_sumo/Pictures/Backgrounds/bojack.jpg
+export BACKGROUND="/home/phat_sumo/Pictures/vaporwave_delorean.png"
 
 if [ $BACKGROUND ]
 then
