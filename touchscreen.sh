@@ -1,3 +1,2 @@
 #!/bin/bash
-
-exec xinput --map-to-output 12 eDP-1
+exec xinput --map-to-output $(xinput list --id-only "USBest Technology SiS HID Touch Controller") eDP-1
