@@ -23,7 +23,7 @@ fi
 
 # Input validation!
 if [[ ($NUM -gt 20) || ($NUM -lt 1)]]; then
-  echo "You done fucked up bitch, enter a good number this time" 
+  echo "Try entering a number between 1 and 20." 
   exit
 fi
 
@@ -34,7 +34,7 @@ if [[ ($NUM == 20) ]]; then
 fi
 
 # Actually setting the brightness.
-echo $NEW_BRIGHT | sudo tee /sys/class/backlight/intel_backlight/brightness 
+echo $NEW_BRIGHT | tee /sys/class/backlight/intel_backlight/brightness
 
 # If "-c" was passed, we'll clear the screen after changing brightness
 if [ "$CLEAR" = true ]; then

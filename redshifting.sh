@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+
+
+VAR=$1
+
+# Input validation!
+if [[ ($VAR -gt 10) || ($VAR -lt 1)]]; then
+  echo "You need to enter a number between 1 and 10." 
+  exit
+fi
+
+NUM=$(echo "$VAR / 10" | bc -l)
+
+echo $NUM
+
+exec redshift -b $NUM
+
