@@ -1,5 +1,2 @@
 #!/usr/bin/env zsh
-
-IMAGE="huehue.png"
-
-scrot -z $IMAGE
+sudo backlight $1 $2
