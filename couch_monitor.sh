@@ -1,3 +1,7 @@
-#!bin/bash
-exec xrandr --output HDMI-1 --auto --above eDP-1
-exec backg
+#!/bin/bash
+pulseaudio -k &
+~/Documents/Scripts/back.sh &
+~/Documents/Scripts/touchscreen.sh &
+
+
+exec xrandr --output HDMI-1 --auto --above eDP-1 
