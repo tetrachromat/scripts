@@ -4,4 +4,4 @@ pulseaudio -k &
 ~/Documents/Scripts/touchscreen.sh &
 
 
-exec xrandr --output HDMI-1 --auto --above eDP-1 
+exec xrandr --output HDMI1 --auto --above eDP1 
