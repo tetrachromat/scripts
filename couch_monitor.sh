@@ -1,5 +1,5 @@
 #!/bin/bash
-pulseaudio -k &
+
 ~/Documents/Scripts/back.sh &
 ~/Documents/Scripts/touchscreen.sh &
 
