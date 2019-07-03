@@ -1,2 +1,2 @@
 #!/bin/bash
-exec xinput --map-to-output $(xinput list --id-only "USBest Technology SiS HID Touch Controller") eDP-1
+exec xinput --map-to-output $(xinput list --id-only "USBest Technology SiS HID Touch Controller") eDP-1-1

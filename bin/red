@@ -1,3 +1,3 @@
 #!/usr/bin/env zsh
 
-exec ~/Documents/Scripts/redshifting.sh
+exec ~/Documents/Scripts/redshifting.sh $1

@@ -1,0 +1,2 @@
+#!/usr/bin/env zsh
+paccache --remove --keep 1 --verbose
