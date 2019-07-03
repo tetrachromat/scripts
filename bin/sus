@@ -1,2 +1,0 @@
-wait 3
-systemctl suspend

@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+export BACKGROUND="/home/phat_sumo/.dots/bg/vaporwave_delorean.png"
+
+if [ $BACKGROUND ]
+then
+  exec feh --bg-fill $BACKGROUND
+else
+  exec feh --bg-fill /home/phat_sumo/.dots/bg/solarized_home.png
+fi
+

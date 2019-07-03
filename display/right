@@ -1,0 +1,6 @@
+#!/bin/bash
+
+exec backg &
+exec touchscreen &
+
+exec xrandr --output HDMI-1 --auto --right-of eDP-1
