@@ -1,0 +1,25 @@
+#!/bin/sh
+
+case "$1" in
+  s) mode=silent;;
+  n) mode=normal;;
+  b) mode=boost;;
+  *) echo "Usage: 
+  s silent
+  n normal
+  b boost"
+     exit 1;;
+esac
+
+rog-core -d > /dev/null 2>&1 &
+
+PID=$!
+
+sleep 1
+
+rog-core -f $mode > /dev/null 2>&1 &
+
+sleep 1
+
+kill -9 $PID
+

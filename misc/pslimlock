@@ -1,5 +1,0 @@
-#!/usr/bin/env zsh
-
-sudo /opt/set_background.sh
-
-slimlock

@@ -1,0 +1,11 @@
+#!/bin/sh
+# simple paste script - middle click without mouse
+
+# there are multiple ways to do this. xdotool seems a little faster, although
+# xvkbd is perhaps cleaner (since there's less fuckery with modifiers). 
+
+#sselp | xvkbd -xsendevent -file - 2>/dev/null
+xdotool type --clearmodifiers "$(sselp)"
+
+
+

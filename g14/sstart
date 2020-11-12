@@ -1,0 +1,67 @@
+#!/bin/sh
+
+# launch firefox + st
+
+sleep 1
+
+xdotool key super+3
+
+exec firefox &
+
+exec st &
+
+sleep 1.5
+
+# swap pos
+xdotool key super+space
+
+# resize 
+xdotool key super+l
+xdotool key super+l
+
+# switch to left monitor
+xdotool key super+comma
+
+xdotool key super+9
+
+exec tape &
+
+sleep 1.5
+
+xdotool key super+0
+
+exec spotify &
+
+sleep .5
+
+# switch to right monitor
+
+xdotool key super+comma
+
+xdotool key super+9
+
+exec telegram-desktop &
+
+exec slack &
+
+sleep 3
+
+# swap pos
+xdotool key super+space
+
+# resize 
+xdotool key super+l
+xdotool key super+l
+
+xdotool key super+8
+
+exec discord-canary &
+
+sleep 5
+
+xdotool key super+9
+
+xdotool key super+comma
+
+
+

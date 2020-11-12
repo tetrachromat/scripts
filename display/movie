@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# script to set xorg timeout for watching videos
+
+if xset -q | grep "DPMS is Enabled" > /dev/null 2>&1; then
+  echo "turning off dpms";
+  xset s off -dpms
+else
+  echo "turning on dpms";
+  xset s on +dpms
+fi
+

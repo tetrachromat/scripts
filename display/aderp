@@ -19,6 +19,9 @@ esac
 
 if [ -f /etc/X11/xorg.conf ]; then
   xrandr --output eDP-1 --brightness $b
+  xrandr --output HDMI-1 --brightness $b &
 else
   xrandr --output eDP-1-1 --brightness $b
+  xrandr --output HDMI-1-1 --brightness $b &
+  xrandr --output DP-0 --brightness $b &
 fi

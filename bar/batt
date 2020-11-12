@@ -1,0 +1,22 @@
+#!/bin/sh
+
+call=$(acpi -b)
+s=${call#Battery 0: }; s=${s%%,*}
+perc=${call#*, }; perc=${perc%\%*}
+
+state=""
+
+case "$s" in
+  "Discharging") state="d";;
+  "Not charging") state="nc";;
+  "Charging") state="c";;
+  *) echo "can't find battery";;
+esac
+
+rem=""
+
+if [[ $call == *"remaining"* ]]; then
+  rem=${call##*, }; rem=${rem%:*}
+fi
+
+echo "b:" $state $perc $rem

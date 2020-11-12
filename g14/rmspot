@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd /home/phat_sumo/.cache/spotify
+
+rm -rf Browser/ Data mercury.db offline.bnk Storage

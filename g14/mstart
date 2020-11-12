@@ -1,0 +1,51 @@
+#!/bin/sh
+
+# launch firefox + st
+
+sleep 1
+
+xdotool key super+3
+
+exec firefox &
+
+exec st &
+
+sleep 1
+
+# swap pos
+xdotool key super+space
+
+# resize 
+xdotool key super+l
+xdotool key super+l
+
+xdotool key super+7
+
+exec tape &
+
+sleep 1.5
+
+xdotool key super+0
+
+exec spotify &
+
+sleep .5
+
+xdotool key super+9
+
+exec telegram-desktop &
+
+exec slack &
+
+sleep 2
+
+# swap pos
+xdotool key super+space
+
+xdotool key super+8
+
+exec discord-canary &
+
+sleep 7
+
+xdotool key super+3
