@@ -15,8 +15,8 @@ esac
 
 rem=""
 
-if [[ $call == *"remaining"* ]]; then
-  rem=${call##*, }; rem=${rem%:*}
-fi
+case $call in 
+  *"remaining"*) rem=${call##*, }; rem=${rem%:*}
+esac
 
 echo "b:" $state $perc $rem
