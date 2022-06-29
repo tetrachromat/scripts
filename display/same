@@ -1,7 +1,4 @@
 #!/bin/bash
 
-exec backg &
-exec touchscreen &
 
-
-exec xrandr --output HDMI-1-1 --auto --same-as eDP-1-1 --mode 1920x1080
+exec xrandr --output HDMI-1 --auto --same-as eDP-1 --mode 1920x1080

@@ -2,4 +2,6 @@
 
 unlink /etc/X11/xorg.conf
 
+#ln -s /etc/X11/xorg.conf.prime /etc/X11/xorg.conf
+
 ln -s /etc/X11/xorg.conf.d/20-gpus.conf.b /etc/X11/xorg.conf.d/20-gpus.conf

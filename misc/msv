@@ -1,0 +1,3 @@
+#!/bin/sh
+
+SVDIR=~/.sv/service sv $@

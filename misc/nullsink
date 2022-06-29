@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+
+pactl load-module module-null-sink sink_name=nullsink
+pactl load-module module-loopback source=nullsink.monitor sink=@DEFAULT_SINK@

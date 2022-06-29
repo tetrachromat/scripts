@@ -1,0 +1,120 @@
+#!/bin/sh
+# mnt - filesystem mounting wrapper script
+# author: phat_sumo
+
+[ "root" != "$USER" ] && exec sudo $0 "$@"
+
+# configuration:                                   /optional
+#                                                  v
+#       name: partuuid                             encrypted?  path
+crypt="crypt: 980bd86e-05ac-e14b-be7e-a78ca89a1325 (encrypted) /home/phat_sumo/crypt"
+storage="storage: 5e6eaeaa-6633-2d4a-b55a-e4ee9eb4a175 /home/phat_sumo/Storage"
+mobile="mobile: 3c952f4f-4568-bf43-974f-849ad192f932 /home/phat_sumo/mobile"
+work="work: 8820a3fc-8b68-2e4c-803c-d488e80f13a8 /home/phat_sumo/Documents/work"
+data="data: d85656c8-ab7a-cb41-b87e-10f5307f4e23 /home/phat_sumo/Documents/data"
+
+usage="usage: ${0##*/} [n] [cdmswh] or [cmsw]${0##*/}
+devices: 
+  c $crypt
+  d $data
+  m $mobile
+  s $storage
+  w $work
+
+commands: 
+  mnt DEVICE     mount specified device
+  umnt DEVICE    unmount specified device
+
+more:
+  COMMAND [cmsw]   perform COMMAND and print to stdout
+  COMMAND n DEVICE perform COMMAND and notify
+  [cmsw]COMMAND    perform COMMAND and notify
+  COMMAND h        print this menu"
+
+fail() { 
+
+	echo ${0##*/}: 1>&2 "$*"
+
+	[ "$warn" ] && su phat_sumo -c "notify-send 'mnt' '$*'"
+
+	exit 1; 
+}
+
+try() {
+	out=$($* 2>&1)
+	err=$?
+
+	[ $err -gt 0 ] && fail "$1 error $err: $out"
+}
+
+notify() { su phat_sumo -c "notify-send -t 2000 'mnt' '$*'"; }
+
+open() { 
+
+	partuuid=$(echo ${1##*: } | sed -e "s/ .*$//")
+	name="${1%%: *}"
+	path="${1##* }"
+
+	disk="/dev/disk/by-partuuid/$partuuid"
+
+	[ ! -h "$disk" ] && fail "device $name not found"
+
+	# if device is encrypted, mount here
+	if [ ! "${1##*(encrypted)*}" ]; then
+
+		try cryptsetup open /dev/disk/by-partuuid/$partuuid $name
+
+		disk="/dev/mapper/$name"
+	fi
+
+	mkdir $path; 
+
+	try mount $disk $path
+}
+
+close() { 
+
+	path="${1##* }"
+	name="${1%%: *}"
+
+	[ ! -d "$path" ] && fail "device $name not mounted"
+
+	try umount $path
+
+	# if device is encrypted, close before continuing
+	[ ! "${1##*(encrypted)*}" ] && try cryptsetup close $name
+
+	rm -rf $path
+}
+
+[ $# -gt 2 ] && fail "$usage"
+
+[ -z "$1" ] && warn="true"
+
+[ "$1" = "n" ] && warn="true" && shift
+
+# use parameter or device code in prefix
+device_code=${1:-`echo ${0##*/} | sed -e "s/umnt$//" -e "s/mnt$//"`}
+
+case "$device_code" in
+	c) device=$crypt;;
+	d) device=$data;;
+	m) device=$mobile;;
+	s) device=$storage;;
+	w) device=$work;;
+	h|"") echo "$usage"; exit 0;;
+	?) fail "$usage";;
+esac
+
+case "$0" in
+	*umnt) 
+		close "$device";
+		echo "${device%%: *} closed successfully"
+		[ "$warn" ] && notify "${device%%: *} closed successfully";;
+	*mnt) 
+		open "$device";
+		echo "${device%%: *} opened successfully"
+		[ "$warn" ] && notify "${device%%: *} opened successfully";;
+esac
+
+exit 0

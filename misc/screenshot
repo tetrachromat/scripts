@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+scrot -fs '/home/phat_sumo/Downloads/%Y%m%d_$wx$h.png'
+

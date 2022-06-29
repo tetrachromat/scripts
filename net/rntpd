@@ -3,6 +3,6 @@
 (( $EUID != 0 )) && { echo "must run as root"; exit 13 } || :
 
 # wait for network connection
-until checknet; do sleep 5; done
+until su -c checknet phat_sumo; do sleep 5; done
 
 sv restart openntpd

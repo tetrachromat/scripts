@@ -9,15 +9,4 @@ case "$1" in
      exit 1;;
 esac
 
-rog-core -d > /dev/null 2>&1 &
-
-PID=$!
-
-sleep 1
-
 rog-core -b $mode > /dev/null 2>&1 &
-
-sleep 1
-
-kill -9 $PID
-

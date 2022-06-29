@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export BACKGROUND="/home/phat_sumo/.dots/bg/pink.png"
+export BACKGROUND="/home/phat_sumo/.dots/bg/pink_eva.jpg"
 
 if [ $BACKGROUND ]
 then

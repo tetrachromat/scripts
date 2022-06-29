@@ -10,7 +10,7 @@ exec firefox &
 
 exec st &
 
-sleep 1
+sleep 2
 
 # swap pos
 xdotool key super+space
@@ -37,6 +37,10 @@ exec telegram-desktop &
 
 exec slack &
 
+# resize 
+xdotool key super+l
+xdotool key super+l
+
 sleep 2
 
 # swap pos
@@ -44,7 +48,7 @@ xdotool key super+space
 
 xdotool key super+8
 
-exec discord-canary &
+exec discord &
 
 sleep 7
 
