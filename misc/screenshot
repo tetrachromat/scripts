@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# freeze the screen, take a selection screenshot, and add it to the system clipboard
 
-scrot -fs '/home/phat_sumo/Downloads/%Y%m%d_$wx$h.png'
+scrot -fs '/home/phat_sumo/Downloads/%Y%m%d_$wx$h.png' -e 'xclip -selection clipboard -t image/png -i $f'
 

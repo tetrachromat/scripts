@@ -52,4 +52,8 @@ exec discord &
 
 sleep 7
 
-xdotool key super+3
+xdotool key super+1
+
+exec noisetorch &
+
+exec taralli &
