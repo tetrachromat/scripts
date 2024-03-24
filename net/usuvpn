@@ -1,5 +1,0 @@
-#!/bin/bash
-if ! /sbin/ifconfig | grep -q 'DEVICE_NAME'; then
-  sudo openconnect -q sslvpn.usu.edu -u 'a01703244' --passwd-on-stdin < /opt/usuvpn
-fi
- 

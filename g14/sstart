@@ -10,12 +10,12 @@ exec firefox &
 
 exec st &
 
-sleep 1.5
+sleep 5.5
 
 # swap pos
 xdotool key super+space
 
-# resize 
+# resize
 xdotool key super+l
 xdotool key super+l
 
@@ -32,7 +32,7 @@ xdotool key super+0
 
 exec spotify &
 
-sleep 1.5
+sleep 2
 
 # switch to right monitor
 
@@ -40,35 +40,17 @@ xdotool key super+comma
 
 xdotool key super+9
 
+exec discord &
+
 exec telegram-desktop &
 
-exec slack &
-
-sleep 3
-
-# swap pos
-xdotool key super+space
-
-# resize 
+# resize
 xdotool key super+l
 xdotool key super+l
-
-xdotool key super+8
-
-exec discord &
 
 sleep 8
 
-xdotool key super+9
+# swap pos
+# xdotool key super+space
 
 xdotool key super+comma
-
-sleep 1
-
-xdotool key super+1
-
-exec noisetorch &
-
-exec taralli &
-
-

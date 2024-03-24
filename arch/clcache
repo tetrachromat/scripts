@@ -1,2 +1,0 @@
-#!/bin/sh
-paccache --remove --keep 2 --verbose

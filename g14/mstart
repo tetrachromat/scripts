@@ -10,16 +10,16 @@ exec firefox &
 
 exec st &
 
-sleep 2
+sleep 5
 
 # swap pos
 xdotool key super+space
 
-# resize 
+# resize
 xdotool key super+l
 xdotool key super+l
 
-xdotool key super+7
+xdotool key super+8
 
 exec tape &
 
@@ -29,31 +29,21 @@ xdotool key super+0
 
 exec spotify &
 
-sleep .5
+sleep 1
 
 xdotool key super+9
 
+exec discord &
+
 exec telegram-desktop &
 
-exec slack &
-
-# resize 
+# resize
 xdotool key super+l
 xdotool key super+l
-
-sleep 2
-
-# swap pos
-xdotool key super+space
-
-xdotool key super+8
-
-exec discord &
 
 sleep 7
 
-xdotool key super+1
+# swap pos
+# xdotool key super+space
 
-exec noisetorch &
-
-exec taralli &
+xdotool key super+3

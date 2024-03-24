@@ -1,4 +1,7 @@
 #!/bin/bash
 
-exec backg &
-exec xrandr --output DP-0 --mode 1920x1080 --rate 144.00 --output eDP-1-1 --auto --left-of DP-0 --mode 1920x1080 --rate 120 --output HDMI-1-1 --auto --right-of DP-0 --mode 1920x1080 --rate 60 &
+xrandr --output DP-0 --mode 2560x1440 --rate 59.95 --output eDP-1-1 --mode 1920x1080 --rate 120.00 --left-of DP-0 --output HDMI-1-1 --mode 1920x1080 --rate 60.00 --right-of DP-0 &
+
+backg
+
+msv restart taralli
