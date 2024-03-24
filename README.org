@@ -1,0 +1,16 @@
+* scripts
+
+collection of small utilities i've written / adapted / found throughout the years
+some of these have links to other odd programs i might be using- read before you run and all that
+
+since these are going to be included in your ~$PATH~, it's good practice to make sure they're not writeable by just any schmuck with a login
+the makefile will manage setting up permissions and symlinking them to /usr/local/bin with ~stow~
+currently, that's all packed into default, so just set up with ~sudo make~
+
+
+** todo
+
+- [ ] ensure posix compliance (most should be compliant)
+- [ ] rework naming convention? maybe prefix with , to differentiate from system utilities
+- [ ] makefile options per device - more feasible after when i get all my old machines back online
+- [ ] clean up a few more unnecessary commands (especially in ~display/~)
