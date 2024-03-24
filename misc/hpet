@@ -1,0 +1,30 @@
+#!/bin/sh
+# hpet - switch clocksource between hpet & tsc
+# author: phat_sumo
+
+[ "root" != "$USER" ] && exec sudo $0 "$@"
+
+current_clocksource=/sys/devices/system/clocksource/clocksource0/current_clocksource
+
+while getopts ":g" OPT; do
+  case $OPT in
+    g)
+      cat $current_clocksource
+      exit 0
+      ;;
+    *)
+      echo "usage: $(basename $0) {-g}"
+      exit 2
+    ;;
+  esac
+done
+shift $(expr $OPTIND - 1)
+OPTIND=1
+
+if grep "hpet" $current_clocksource > /dev/null 2>&1; then
+  echo "enabling tsc"
+  echo "tsc" > $current_clocksource
+else
+  echo "enabling hpet"
+  echo "hpet" > $current_clocksource
+fi

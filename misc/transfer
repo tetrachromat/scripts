@@ -1,0 +1,35 @@
+#!/bin/sh
+# transfer commands, organized
+# author: phat_sumo
+# todo: expand args to exact paths and make sure they're being passed properly
+
+num_workers=0
+worker_ratio=1.5
+transfer_mode=fpsync
+
+fail() { echo ${0##*/}: 1>&2 "$*"; exit 1; }
+
+while getopts ":ns" opt; do
+  case "$opt" in
+    n) num_workers="$OPTARG" ;;
+    s) transfer_mode=rsync ;;
+    [h?]) fail "$USAGE" ;;
+  esac
+
+  shift
+done
+
+fpsync_transfer() {
+  dc_args="$(printf "$(nproc) $worker_ratio")"
+  [ "$num_workers" = 0 ] && num_workers=$(echo $dc_args " * 1/ f" | dc)
+  echo fpsync -v -n $num_workers $(realpath $*)
+}
+
+rsync_transfer() {
+  rsync -avzz -P --info=progress2 --human-readable --no-i-r $(realpath $*)
+}
+
+case $transfer_mode in
+  fpsync) fpsync_transfer $* ;;
+  rsync) rsync_transfer $* ;;
+esac
