@@ -1,6 +1,6 @@
 #!/bin/bash
 
-xrandr --output DP-0 --mode 2560x1440 --rate 59.95 --output eDP-1-1 --mode 1920x1080 --rate 120.00 --left-of DP-0 --output HDMI-1-1 --mode 1920x1080 --rate 60.00 --right-of DP-0 &
+xrandr --output DP-0 --mode 2560x1440 --rate 59.95 --output eDP-1-1 --mode 1920x1080 --rate 120.00 --left-of DP-0 --output HDMI-1-1 --mode 2560x1440 --rate 59.5 --right-of DP-0 &
 
 backg
 

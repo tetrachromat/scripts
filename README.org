@@ -14,3 +14,4 @@ currently, that's all packed into default, so just set up with ~sudo make~
 - [ ] rework naming convention? maybe prefix with , to differentiate from system utilities
 - [ ] makefile options per device - more feasible after when i get all my old machines back online
 - [ ] clean up a few more unnecessary commands (especially in ~display/~)
+- [ ] add makefile option to clear out broken symlinks
