@@ -1,1 +1,54 @@
-vol
+#!/bin/sh
+# vol - volume wrapper for pamixer
+# author: tetrachromat
+
+usage="usage: ${0##*/} [udgh] PERCENT
+  u  up: increment volume by PERCENT or 5 (default)
+  d  down: decrement volume by PERCENT or 5 (default)
+  s  set: set volume to PERCENT or 100 (default)
+  m  mute: toggle muted state
+  g  get: volume and muted state
+  h  help: print this menu
+
+alternative commands: 
+  volu: increment volume by 5 and notify
+  vold: decrement volume by 5 and notify
+  volm: toggle mute and notify
+  volg: notify volume"
+
+fail() { echo ${0##*/}: 1>&2 "$*"; exit 1; }
+
+notify() { notify-send -t 500 "system volume" "$(volume)"; }
+
+volume() {
+
+	vol=$(pamixer --get-volume)
+	mute=$(pamixer --get-mute)
+	vol_string="$vol%"
+
+	if [ "$mute" = "true" ]; then
+		vol_string="$vol_string / muted"
+	fi
+
+	echo $vol_string
+}
+
+case "$0" in
+	*volu) pamixer -i 5; notify; exit 0;;
+	*vold) pamixer -d 5; notify; exit 0;;
+	*volm) pamixer -t; notify; exit 0;;
+	*volg) notify; exit 0;;
+	*vol)  ;;
+esac
+
+case "$1" in
+	u) pamixer -i $2 2>/dev/null || pamixer -i 5;;
+	d) pamixer -d $2 2>/dev/null || pamixer -d 5;;
+	s) pamixer --set-volume $2 2>/dev/null || pamixer --set-volume 100;;
+	m) pamixer -t;;
+	g) ;;
+	h) echo "$usage"; exit 0;;
+	?) fail "$usage";;
+esac
+
+echo $(volume)

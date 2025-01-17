@@ -1,0 +1,71 @@
+#!/bin/sh
+# un/wake - wrapper for etherwake with device configurations
+# author: tetrachromat
+
+### config ###
+
+# configuration strings:
+
+# fallback server to bounce WoL request to
+bastion="honnouji-route"
+
+#   host  mac
+turquoise="d8:43:ae:2c:24:eb"
+
+# network device
+# dev="wlan0"
+dev="wlan0"
+
+### helpers ###
+
+usage="usage: ${0##*/} HOST
+commands:
+  wake HOST    wake host from sleep or poweroff with etherwake
+  unwake HOST  suspend host with zzz.8
+hosts:
+  t turquoise   $turquoise
+  h help       print this menu"
+
+fail() {
+  echo ${0##*/}: "$*" 1>&2
+  exit 1
+}
+
+### commands ###
+
+wake() {
+  etherwake -i $dev $mac
+}
+
+unwake() {
+  ssh $host 'nohup sudo zzz >/dev/null 2>&1 &'
+}
+
+### main ###
+
+# determine which command we're running, and escalate priveleges if necessary
+
+case "$0" in
+  *unwake) command="unwake" ;;
+  *wake)
+         [ "root" != "$USER" ] && exec sudo $0 "$@"
+         command="wake"
+         ;;
+  ?) fail "$usage" ;;
+esac
+
+# determine which host to access
+
+case "$1" in
+  t) host="turquoise" ;;
+  h | "")
+          echo "$usage"
+          exit 0
+          ;;
+  ?) fail "$usage" ;;
+esac
+
+# set up mac address variable
+mac=$(eval echo "\$${host}")
+
+eval $command

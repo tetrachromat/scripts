@@ -1,6 +1,6 @@
 #!/bin/sh
 # derp - really simple xrandr brightness script
-# author: phat_sumo
+# author: tetrachromat
 
 usage="usage: \t${0##*/}
 i\tincrement 5%

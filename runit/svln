@@ -28,7 +28,7 @@ unlink_service() {
 [ "$1" = "-h" ] && echo "$usage" && exit 0;
 
 case "$0" in 
-	*msvln) service_dir="/home/phat_sumo/.sv/service";;
+	*msvln) service_dir="/home/tetrachromat/.sv/service";;
 	*svln) [ "root" != "$USER" ] && exec sudo $0 "$@";
 				 service_dir="/run/runit/service";;
 esac

@@ -6,9 +6,9 @@ sleep 1
 
 xdotool key super+3
 
-exec firefox &
+firefox &
 
-exec st &
+st &
 
 sleep 5.5
 
@@ -22,35 +22,42 @@ xdotool key super+l
 # switch to left monitor
 xdotool key super+comma
 
-xdotool key super+9
+xdotool key super+8
 
-exec tape &
+tape &
 
 sleep 1.5
 
 xdotool key super+0
-
-exec spotify &
-
-sleep 2
-
-# switch to right monitor
-
-xdotool key super+comma
+tidal &
+sleep 4
 
 xdotool key super+9
 
-exec discord &
+vesktop &
 
-exec telegram-desktop &
+telegram-desktop &
 
 # resize
 xdotool key super+l
 xdotool key super+l
 
-sleep 8
+sleep 12
+
+# swap pos
+xdotool key super+space
+
+# switch to right monitor
+
+xdotool key super+comma
+
+# emacs :3
+ne &
+
+sleep 1
 
 # swap pos
 # xdotool key super+space
 
+# back to main
 xdotool key super+comma

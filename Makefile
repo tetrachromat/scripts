@@ -9,16 +9,16 @@ help:
 all: permissions
 	stow -t $(BIN) $(DIRS)
 
-ryuko: permissions # bar display fun g14 misc net runit wrappers
-	stow -t $(BIN) bar display fun g14 misc net runit wrappers
+magenta: permissions # bar display fun misc net runit wrappers
+	stow -t $(BIN) bar display fun misc net runit wrappers magenta
 
-senketsu: permissions # bar display fun senketsu misc net runit wrappers
-	stow -t $(BIN) bar display fun senketsu misc net runit wrappers
+turquoise: permissions # bar display fun turquoise misc net runit wrappers
+	stow -t $(BIN) bar display fun turquoise misc net runit wrappers
 
-permissions:
+perm:
 	chown -R root:root $(DIRS)
 
 unperm:
-	chown -R phat_sumo:phat_sumo $(DIRS)
+	chown -R tetrachromat:tetrachromat $(DIRS)
 
-.PHONY: all permissions ryuko senketsu unperm
+.PHONY: all permissions magenta turquoise unperm

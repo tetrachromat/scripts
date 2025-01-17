@@ -1,6 +1,6 @@
 #!/bin/sh
 
 
-cd /home/phat_sumo/docs/programs/rexpaint/REXPaint-v1.60
+cd /home/tetrachromat/docs/programs/rexpaint/REXPaint-v1.60
 
 wine ./REXPaint.exe

@@ -6,14 +6,15 @@ sleep 1
 
 xdotool key super+3
 
-exec firefox &
+firefox &
 
-exec st &
+sleep 4
 
-sleep 5
+ne &
 
-# swap pos
-xdotool key super+space
+st &
+
+sleep 1
 
 # resize
 xdotool key super+l
@@ -21,29 +22,29 @@ xdotool key super+l
 
 xdotool key super+8
 
-exec tape &
+tape &
 
 sleep 1.5
 
 xdotool key super+0
 
-exec spotify &
+tidal
 
-sleep 1
+sleep 5
 
 xdotool key super+9
 
-exec discord &
+vesktop &
 
-exec telegram-desktop &
+telegram-desktop &
 
 # resize
 xdotool key super+l
 xdotool key super+l
 
-sleep 7
+sleep 10
 
 # swap pos
-# xdotool key super+space
+xdotool key super+space
 
 xdotool key super+3

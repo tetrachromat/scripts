@@ -1,6 +1,6 @@
 #!/bin/sh
 # transfer commands, organized
-# author: phat_sumo
+# author: tetrachromat
 # todo: expand args to exact paths and make sure they're being passed properly
 
 num_workers=0

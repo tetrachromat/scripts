@@ -1,6 +1,6 @@
 #!/bin/sh
 # hpet - switch clocksource between hpet & tsc
-# author: phat_sumo
+# author: tetrachromat
 
 [ "root" != "$USER" ] && exec sudo $0 "$@"
 

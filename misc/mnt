@@ -1,18 +1,20 @@
 #!/bin/sh
 # mnt - filesystem mounting wrapper script
-# author: phat_sumo
+# author: tetrachromat
 
 [ "root" != "$USER" ] && exec sudo $0 "$@"
 
 ### config ###
 
-# configuration strings:                           /optional
-#                                                  v
-#       name: partuuid/uuid                        encrypted?  path
-tomb="tomb: 980bd86e-05ac-e14b-be7e-a78ca89a1325 (encrypted) /home/phat_sumo/tomb"
-crypt="crypt: 323ba667-0a9c-41a6-a20a-09445107b81d (encrypted) /home/phat_sumo/crypt"
-sarcophagus="sarcophagus: 30b8172e-0d63-4028-83f8-56420a135628 (encrypted) /home/phat_sumo/sarcophagus"
-miyoo="miyoo: 6035-81E2 /home/phat_sumo/miyoo"
+# configuration strings:                         /optional
+#                                                v
+#     name: partuuid/uuid                        encrypted?  path
+tomb="tomb: 980bd86e-05ac-e14b-be7e-a78ca89a1325 (encrypted) /home/tetrachromat/tomb"
+crypt="crypt: 323ba667-0a9c-41a6-a20a-09445107b81d (encrypted) /home/tetrachromat/crypt"
+sarcophagus="sarcophagus: 30b8172e-0d63-4028-83f8-56420a135628 (encrypted) /home/tetrachromat/sarcophagus"
+miyoo="miyoo: 6035-81E2 /home/tetrachromat/miyoo"
+
+### helper functions ###
 
 usage="usage: ${0##*/} [n] [cmsth]
 devices:
@@ -31,13 +33,11 @@ more:
   [cmsw]COMMAND    perform COMMAND and notify
   COMMAND h        print this menu"
 
-### helper functions ###
-
 fail() {
 
   echo ${0##*/}:     "$*" 1>&2
 
-  [ "$warn" ] && su phat_sumo -c "notify-send 'mnt' '$*'"
+  [ "$warn" ] && su tetrachromat -c "notify-send 'mnt' '$*'"
 
   exit 1
 }
@@ -49,7 +49,7 @@ try() {
   [ $err -gt 0 ] && fail "$1 error $err: $out"
 }
 
-notify() { su phat_sumo -c "notify-send -t 2000 'mnt' '$*'"; }
+notify() { su tetrachromat -c "notify-send -t 2000 'mnt' '$*'"; }
 
 open() {
 
@@ -61,8 +61,8 @@ open() {
   # to handle mounting fat filesystems, check if the length of the string
   # is sized for a uuid name- otherwise, assume a partuuid name
   case $(expr length $partuuid) in
-  9) disk="/dev/disk/by-uuid/$partuuid" ;;
-  *) disk="/dev/disk/by-partuuid/$partuuid" ;;
+    9) disk="/dev/disk/by-uuid/$partuuid" ;;
+    *) disk="/dev/disk/by-partuuid/$partuuid" ;;
   esac
 
   [ ! -h "$disk" ] && fail "device $name not found"
@@ -78,8 +78,8 @@ open() {
   mkdir $path
 
   case $(expr length $partuuid) in
-  9)
-     disk="-t vfat $disk"
+    9)
+      disk="-t vfat $disk"
                            path="$path -o rw,uid=1000,gid=1000"
                                                                 ;;
   esac
@@ -109,27 +109,27 @@ close() {
 while [ $# -gt 0 ]; do
 
   case "$1" in
-  c) device=$crypt ;;
-  m) device=$miyoo ;;
-  s) device=$sarcophagus ;;
-  t) device=$tomb ;;
-  h | "")
+    c) device=$crypt ;;
+    m) device=$miyoo ;;
+    s) device=$sarcophagus ;;
+    t) device=$tomb ;;
+    h | "")
           echo "$usage"
           exit 0
           ;;
-  ?) fail "error: device_code \"$1\" not recognized.\n\n$usage" ;;
+    ?) fail "error: device_code \"$1\" not recognized.\n\n$usage" ;;
   esac
 
   case "$0" in
-  *umnt)
-    close "$device"
-    echo "${device%%: *} closed successfully"
-    [ "$warn" ] && notify "${device%%: *} closed successfully"
+    *umnt)
+      close "$device"
+      echo "${device%%: *} closed successfully"
+      [ "$warn" ] && notify "${device%%: *} closed successfully"
                                                               ;;
-  *mnt)
-    open "$device"
-    echo "${device%%: *} opened successfully"
-    [ "$warn" ] && notify "${device%%: *} opened successfully"
+    *mnt)
+      open "$device"
+      echo "${device%%: *} opened successfully"
+      [ "$warn" ] && notify "${device%%: *} opened successfully"
                                                               ;;
   esac
 

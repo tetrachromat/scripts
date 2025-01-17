@@ -1,1 +1,140 @@
-mnt
+#!/bin/sh
+# mnt - filesystem mounting wrapper script
+# author: tetrachromat
+
+[ "root" != "$USER" ] && exec sudo $0 "$@"
+
+### config ###
+
+# configuration strings:                         /optional
+#                                                v
+#     name: partuuid/uuid                        encrypted?  path
+tomb="tomb: 980bd86e-05ac-e14b-be7e-a78ca89a1325 (encrypted) /home/tetrachromat/tomb"
+crypt="crypt: 323ba667-0a9c-41a6-a20a-09445107b81d (encrypted) /home/tetrachromat/crypt"
+sarcophagus="sarcophagus: 30b8172e-0d63-4028-83f8-56420a135628 (encrypted) /home/tetrachromat/sarcophagus"
+miyoo="miyoo: 6035-81E2 /home/tetrachromat/miyoo"
+
+### helper functions ###
+
+usage="usage: ${0##*/} [n] [cmsth]
+devices:
+  c $crypt
+  m $miyoo
+  s $sarcophagus
+  t $tomb
+
+commands:
+  mnt DEVICE     mount specified device
+  umnt DEVICE    unmount specified device
+
+more:
+  COMMAND [cmsw]   perform COMMAND and print to stdout
+  COMMAND n DEVICE perform COMMAND and notify
+  [cmsw]COMMAND    perform COMMAND and notify
+  COMMAND h        print this menu"
+
+fail() {
+
+  echo ${0##*/}:     "$*" 1>&2
+
+  [ "$warn" ] && su tetrachromat -c "notify-send 'mnt' '$*'"
+
+  exit 1
+}
+
+try() {
+  out=$($* 2>&1)
+  err=$?
+
+  [ $err -gt 0 ] && fail "$1 error $err: $out"
+}
+
+notify() { su tetrachromat -c "notify-send -t 2000 'mnt' '$*'"; }
+
+open() {
+
+  # extract useful parameters from the config string
+  partuuid=$(echo ${1##*: } | sed -e "s/ .*$//")
+  name="${1%%: *}"
+  path="${1##* }"
+
+  # to handle mounting fat filesystems, check if the length of the string
+  # is sized for a uuid name- otherwise, assume a partuuid name
+  case $(expr length $partuuid) in
+    9) disk="/dev/disk/by-uuid/$partuuid" ;;
+    *) disk="/dev/disk/by-partuuid/$partuuid" ;;
+  esac
+
+  [ ! -h "$disk" ] && fail "device $name not found"
+
+  # if device is encrypted, mount here
+  if [ ! "${1##*(encrypted)*}" ]; then
+
+    try cryptsetup open /dev/disk/by-partuuid/$partuuid $name
+
+    disk="/dev/mapper/$name"
+  fi
+
+  mkdir $path
+
+  case $(expr length $partuuid) in
+    9)
+      disk="-t vfat $disk"
+                           path="$path -o rw,uid=1000,gid=1000"
+                                                                ;;
+  esac
+
+  try mount $disk $path
+}
+
+close() {
+
+  path="${1##* }"
+  name="${1%%: *}"
+
+  [ ! -d "$path" ] && fail "device $name not mounted"
+
+  try umount $path
+
+  # if device is encrypted, close before continuing
+  [ ! "${1##*(encrypted)*}" ] && try cryptsetup close $name
+
+  rm -rf $path
+}
+
+### main ###
+
+[ "$1" = "-n" ] && warn="true" && shift
+
+while [ $# -gt 0 ]; do
+
+  case "$1" in
+    c) device=$crypt ;;
+    m) device=$miyoo ;;
+    s) device=$sarcophagus ;;
+    t) device=$tomb ;;
+    h | "")
+          echo "$usage"
+          exit 0
+          ;;
+    ?) fail "error: device_code \"$1\" not recognized.\n\n$usage" ;;
+  esac
+
+  case "$0" in
+    *umnt)
+      close "$device"
+      echo "${device%%: *} closed successfully"
+      [ "$warn" ] && notify "${device%%: *} closed successfully"
+                                                              ;;
+    *mnt)
+      open "$device"
+      echo "${device%%: *} opened successfully"
+      [ "$warn" ] && notify "${device%%: *} opened successfully"
+                                                              ;;
+  esac
+
+  shift
+
+done
+
+exit 0

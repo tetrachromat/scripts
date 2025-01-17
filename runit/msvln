@@ -1,1 +1,42 @@
-svln
+#!/bin/sh
+# svln - link services for sv
+
+usage="usage: ${0##*/} [-r] SERVICE
+commands:
+	svln  links SERVICE to system service directory
+	msvln links SERVICE to user service directory
+
+flags: 
+	-r		removes SERVICE from specified service directory"
+
+fail() { 
+
+	echo ${0##*/}: 1>&2 "$*"
+
+	exit 1; 
+}
+
+link_service() {
+	echo ln -s $(pwd)/$1 $service_dir
+}
+
+unlink_service() {
+	echo rm $service_dir/$1
+}
+
+[ -z "$1" ] && echo "$usage" && exit 0;
+[ "$1" = "-h" ] && echo "$usage" && exit 0;
+
+case "$0" in 
+	*msvln) service_dir="/home/tetrachromat/.sv/service";;
+	*svln) [ "root" != "$USER" ] && exec sudo $0 "$@";
+				 service_dir="/run/runit/service";;
+esac
+
+if [ "$1" = "-r" ]; then 
+	shift 
+	[ -z "$1" ] && fail "$usage"
+	$($(unlink_service $1))
+else
+	$($(link_service $1))
+fi

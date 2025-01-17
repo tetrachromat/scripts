@@ -1,6 +1,6 @@
 #!/bin/sh
 # vol - volume wrapper for pamixer
-# author: phat_sumo
+# author: tetrachromat
 
 usage="usage: ${0##*/} [udgh] PERCENT
   u  up: increment volume by PERCENT or 5 (default)
